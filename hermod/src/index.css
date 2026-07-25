@@ -1,0 +1,361 @@
+@layer theme, base, clerk, components, utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-primary-border: var(--sidebar-primary-border);
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-accent-border: var(--sidebar-accent-border);
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ─── Neural Grid — Dark only ─────────────────────────────── */
+:root,
+.dark {
+  --button-outline: rgba(57, 255, 20, 0.15);
+  --badge-outline: rgba(57, 255, 20, 0.12);
+  --opaque-button-border-intensity: 5;
+  --elevate-1: rgba(57, 255, 20, 0.03);
+  --elevate-2: rgba(57, 255, 20, 0.06);
+
+  /* Core palette */
+  --background: 0 0% 3%;           /* #080808 */
+  --foreground: 0 0% 91%;          /* #E8E8E8 */
+  --border: 0 0% 10%;              /* #1A1A1A */
+  --input: 0 0% 8%;
+  --ring: 112 100% 54%;            /* #39FF14 */
+
+  /* Cards / panels */
+  --card: 0 0% 5%;                 /* #0D0D0D */
+  --card-foreground: 0 0% 91%;
+  --card-border: 0 0% 10%;
+
+  /* Popover */
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 91%;
+  --popover-border: 0 0% 12%;
+
+  /* Sidebar */
+  --sidebar: 0 0% 3%;
+  --sidebar-foreground: 0 0% 85%;
+  --sidebar-border: 0 0% 10%;
+  --sidebar-primary: 112 100% 54%;  /* #39FF14 */
+  --sidebar-primary-foreground: 0 0% 3%;
+  --sidebar-accent: 0 0% 7%;
+  --sidebar-accent-foreground: 0 0% 91%;
+  --sidebar-ring: 112 100% 54%;
+
+  /* Primary — electric lime */
+  --primary: 112 100% 54%;         /* #39FF14 */
+  --primary-foreground: 0 0% 3%;
+
+  /* Secondary — dark panel */
+  --secondary: 0 0% 8%;
+  --secondary-foreground: 0 0% 80%;
+
+  /* Muted */
+  --muted: 0 0% 7%;
+  --muted-foreground: 0 0% 53%;    /* #888 */
+
+  /* Accent — cyan teal */
+  --accent: 168 100% 50%;          /* #00FFD1 */
+  --accent-foreground: 0 0% 3%;
+
+  /* Destructive */
+  --destructive: 0 100% 63%;       /* #FF4444 */
+  --destructive-foreground: 0 0% 98%;
+
+  /* Chart */
+  --chart-1: 112 100% 54%;         /* green */
+  --chart-2: 168 100% 50%;         /* cyan */
+  --chart-3: 40 100% 50%;          /* amber */
+  --chart-4: 25 95% 53%;           /* orange */
+  --chart-5: 0 100% 63%;           /* red */
+
+  /* Typography */
+  --app-font-sans: 'Inter', system-ui, sans-serif;
+  --app-font-serif: Georgia, serif;
+  --app-font-mono: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+
+  /* Geometry */
+  --radius: 0.125rem;              /* 2px — almost flat */
+
+  /* Shadows — subtle green tint */
+  --shadow-2xs: 0 1px 2px rgba(0,0,0,0.8);
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.8);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.8);
+  --shadow: 0 2px 4px rgba(0,0,0,0.8);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.8);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.9);
+  --shadow-xl: 0 16px 32px rgba(0,0,0,0.9);
+  --shadow-2xl: 0 24px 48px rgba(0,0,0,0.95);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* Border computed variants */
+  --sidebar-primary-border: hsl(112 100% 44%);
+  --sidebar-accent-border: hsl(0 0% 12%);
+  --primary-border: hsl(112 100% 44%);
+  --secondary-border: hsl(0 0% 12%);
+  --muted-border: hsl(0 0% 10%);
+  --accent-border: hsl(168 100% 42%);
+  --destructive-border: hsl(0 90% 50%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Scrollbar — dark neural style */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(0 0% 18%); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(112 100% 54% / 0.4); }
+}
+
+/* ─── Subtle grid texture on background ────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(57,255,20,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,255,20,0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ─── Risk utilities ────────────────────────────────────────── */
+.risk-low    { color: hsl(112 100% 54%); }
+.risk-medium { color: hsl(40 100% 50%); }
+.risk-high   { color: hsl(25 95% 53%); }
+.risk-critical { color: hsl(0 100% 63%); }
+
+.risk-low-bg      { background-color: hsl(112 100% 54% / 0.08); border-color: hsl(112 100% 54% / 0.25); }
+.risk-medium-bg   { background-color: hsl(40 100% 50% / 0.08); border-color: hsl(40 100% 50% / 0.25); }
+.risk-high-bg     { background-color: hsl(25 95% 53% / 0.08); border-color: hsl(25 95% 53% / 0.25); }
+.risk-critical-bg { background-color: hsl(0 100% 63% / 0.08); border-color: hsl(0 100% 63% / 0.25); }
+
+/* ─── Status badge utilities ────────────────────────────────── */
+.status-success  { color: hsl(112 100% 54%); background: hsl(112 100% 54% / 0.08); border-color: hsl(112 100% 54% / 0.2); }
+.status-pending  { color: hsl(40 100% 50%); background: hsl(40 100% 50% / 0.08); border-color: hsl(40 100% 50% / 0.2); }
+.status-failed   { color: hsl(0 100% 63%); background: hsl(0 100% 63% / 0.08); border-color: hsl(0 100% 63% / 0.2); }
+.status-blocked  { color: hsl(25 95% 53%); background: hsl(25 95% 53% / 0.08); border-color: hsl(25 95% 53% / 0.2); }
+
+/* ─── Card accent top-border variants ──────────────────────── */
+.card-accent-green  { border-top: 2px solid hsl(112 100% 54%); }
+.card-accent-cyan   { border-top: 2px solid hsl(168 100% 50%); }
+.card-accent-amber  { border-top: 2px solid hsl(40 100% 50%); }
+.card-accent-red    { border-top: 2px solid hsl(0 100% 63%); }
+
+/* ─── Sidebar transition helper ─────────────────────────────── */
+.sidebar-transition {
+  transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.main-transition {
+  transition: margin-left 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Hover elevate system ──────────────────────────────────── */
+.no-default-hover-elevate {}
+.no-default-active-elevate {}
+
+.toggle-elevate::before,
+.toggle-elevate-2::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+}
+.toggle-elevate.toggle-elevated::before { background-color: var(--elevate-2); }
+.border.toggle-elevate::before { inset: -1px; }
+
+.hover-elevate:not(.no-default-hover-elevate),
+.active-elevate:not(.no-default-active-elevate),
+.hover-elevate-2:not(.no-default-hover-elevate),
+.active-elevate-2:not(.no-default-active-elevate) {
+  position: relative;
+  z-index: 0;
+}
+
+.hover-elevate:not(.no-default-hover-elevate)::after,
+.active-elevate:not(.no-default-active-elevate)::after,
+.hover-elevate-2:not(.no-default-hover-elevate)::after,
+.active-elevate-2:not(.no-default-active-elevate)::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 999;
+}
+
+.hover-elevate:hover:not(.no-default-hover-elevate)::after,
+.active-elevate:active:not(.no-default-active-elevate)::after {
+  background-color: var(--elevate-1);
+}
+
+.hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
+.active-elevate-2:active:not(.no-default-active-elevate)::after {
+  background-color: var(--elevate-2);
+}
+
+.border.hover-elevate:not(.no-hover-interaction-elevate)::after,
+.border.active-elevate:not(.no-active-interaction-elevate)::after,
+.border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
+.border.active-elevate-2:not(.no-active-interaction-elevate)::after {
+  inset: -1px;
+}
+
+/* ─── Clerk form styling ────────────────────────────────────── */
+.cl-formFieldInput::placeholder {
+  color: hsl(var(--muted-foreground));
+  opacity: 1;
+}
+.cl-formFieldInput:focus::placeholder { opacity: 0.5; }
+
+/* ─── Utility overrides ─────────────────────────────────────── */
+@layer utilities {
+  input[type='search']::-webkit-search-cancel-button { @apply hidden; }
+
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+  }
+
+  /* Tabular numbers for data columns */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ── Mobile responsive helpers ──────────────────────────────── */
+@media (max-width: 767px) {
+  /* Home page section padding */
+  .home-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .home-hero {
+    padding-top: 48px !important;
+    padding-bottom: 40px !important;
+  }
+  /* Hero heading */
+  .home-h1 {
+    font-size: 32px !important;
+    letter-spacing: -0.02em !important;
+  }
+  /* Stat counter value */
+  .home-stat-value {
+    font-size: 20px !important;
+    letter-spacing: -0.02em !important;
+  }
+  /* Stats grid — 2 cols */
+  .home-grid-4 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Feature/step grids — 1 col */
+  .home-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+  /* Two-col split — stack */
+  .home-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  /* Hide decorative floating hexagons */
+  .home-hex {
+    display: none !important;
+  }
+  /* Step connector line */
+  .home-step-connector {
+    display: none !important;
+  }
+  /* Footer inner */
+  .home-footer-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+}
