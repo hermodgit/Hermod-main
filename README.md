@@ -2,15 +2,14 @@
 
 <img src="https://img.shields.io/badge/HERMOD-v1.0-22c55e?style=flat-square&labelColor=0a0a0a" alt="Hermod" />
 
-<h3>⬡ HERMOD</h3>
+# ⬡ HERMOD
 
-<sub><b>VERIFIABLE FINANCIAL AGENTS FOR ONCHAIN FINANCE</b></sub>
+**Verifiable Financial Agents for Onchain Finance**
 
-<br/><br/>
+A production-grade operating console for AI agents managing real onchain assets —
+with policy enforcement, risk detection, and full audit trail.
 
-<sub>A production-grade operating console for AI agents managing real onchain assets —<br/>with policy enforcement, risk detection, and full audit trail.</sub>
-
-<br/><br/>
+<br/>
 
 <a href="https://hermod.ink"><img src="https://img.shields.io/badge/⬡_hermod.ink-LIVE-22c55e?style=flat-square&labelColor=0a0a0a" alt="Live" /></a>
 <img src="https://img.shields.io/badge/mainnet-ready-22c55e?style=flat-square&labelColor=0a0a0a" alt="Mainnet" />
@@ -27,75 +26,55 @@
 
 </div>
 
-<br/>
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Core Modules](#core-modules)
+3. [How It Works](#how-it-works)
+4. [Architecture](#architecture)
+5. [Tech Stack](#tech-stack)
+6. [Integrations](#integrations)
+7. [Supported Networks](#supported-networks)
+8. [Policy Engine](#policy-engine)
+9. [AI Assistant](#ai-assistant)
+10. [Developer API](#developer-api)
+11. [Project Structure](#project-structure)
+12. [Getting Started](#getting-started)
+13. [Security Model](#security-model)
+14. [Roadmap](#roadmap)
+15. [Community](#community)
 
 ---
 
-<sub><b>◈ TABLE OF CONTENTS</b></sub>
-
-<sub>
-
-1. [Overview](#-overview)
-2. [Core Modules](#-core-modules)
-3. [How It Works](#-how-it-works)
-4. [Architecture](#-architecture)
-5. [Tech Stack](#-tech-stack)
-6. [Integrations](#-integrations)
-7. [Supported Networks](#-supported-networks)
-8. [Policy Engine](#-policy-engine)
-9. [AI Assistant](#-ai-assistant)
-10. [Developer API](#-developer-api)
-11. [Project Structure](#-project-structure)
-12. [Getting Started](#-getting-started)
-13. [Security Model](#-security-model)
-14. [Roadmap](#-roadmap)
-15. [Community](#-community)
-
-</sub>
-
----
-
-### ◈ Overview
-
-<sub>
+## Overview
 
 **Hermod** is an operating console where AI financial agents manage real onchain assets under strict human supervision. Every action an agent takes passes through a deterministic policy engine, is risk-scored in real time, and is recorded in an immutable audit log. Nothing executes without your wallet signature — Hermod is fully **non-custodial** and never touches private keys.
 
-</sub>
-
-<sub>
-
 | | |
 |---|---|
-| <sub>**Live Console**</sub> | <sub>[hermod.ink](https://hermod.ink)</sub> |
-| <sub>**Primary Network**</sub> | <sub>Robinhood Chain (chainId `4663`)</sub> |
-| <sub>**Execution Model**</sub> | <sub>🔒 Supervised — wallet signature required for every transaction</sub> |
-| <sub>**Custody**</sub> | <sub>Non-custodial. No private keys. Read-only chain state.</sub> |
-
-</sub>
+| **Live Console** | [hermod.ink](https://hermod.ink) |
+| **Primary Network** | Robinhood Chain (chainId `4663`) |
+| **Execution Model** | 🔒 Supervised — wallet signature required for every transaction |
+| **Custody** | Non-custodial. No private keys. Read-only chain state. |
 
 ---
 
-### ◈ Core Modules
-
-<sub>
+## Core Modules
 
 | Module | Description |
 |---|---|
-| <sub>🛡 **Risk Detection**</sub> | <sub>Real-time wallet & token risk analysis with verifiable onchain data. Blacklist detection, honeypot scanning, rugpull indicators.</sub> |
-| <sub>📈 **Portfolio Analysis**</sub> | <sub>Track balances, PnL, and composition across all chains and wallets. Live USD valuation. Historical snapshots with on-demand refresh.</sub> |
-| <sub>🔑 **Approval Manager**</sub> | <sub>Discover, review, and revoke token approvals across all connected wallets. Infinite-approval detection and risk scoring.</sub> |
-| <sub>⚙ **Transaction Engine**</sub> | <sub>Prepare, simulate, review, and execute transactions with full policy enforcement and approval flows.</sub> |
-| <sub>🤖 **AI Agent Control**</sub> | <sub>Deploy and manage AI financial agents with spend limits, allowed-token lists, and manual override capability.</sub> |
-| <sub>📋 **Audit & Compliance**</sub> | <sub>Immutable event log of every agent action, approval decision, and system event. Exportable for compliance reporting.</sub> |
-
-</sub>
+| 🛡 **Risk Detection** | Real-time wallet & token risk analysis with verifiable onchain data. Blacklist detection, honeypot scanning, rugpull indicators. |
+| 📈 **Portfolio Analysis** | Track balances, PnL, and composition across all chains and wallets. Live USD valuation. Historical snapshots with on-demand refresh. |
+| 🔑 **Approval Manager** | Discover, review, and revoke token approvals across all connected wallets. Infinite-approval detection and risk scoring. |
+| ⚙ **Transaction Engine** | Prepare, simulate, review, and execute transactions with full policy enforcement and approval flows. |
+| 🤖 **AI Agent Control** | Deploy and manage AI financial agents with spend limits, allowed-token lists, and manual override capability. |
+| 📋 **Audit & Compliance** | Immutable event log of every agent action, approval decision, and system event. Exportable for compliance reporting. |
 
 ---
 
-### ◈ How It Works
-
-<sub>
+## How It Works
 
 ```
  STEP 01                    STEP 02                    STEP 03
@@ -108,13 +87,9 @@
  └──────────────────┘       └──────────────────┘       └──────────────────┘
 ```
 
-</sub>
-
 ---
 
-### ◈ Architecture
-
-<sub>
+## Architecture
 
 ```
  ┌─────────────────────────────────────────────────────────────────┐
@@ -127,7 +102,7 @@
  │     Express · Auth Middleware · Rate Limiting · CORS Policy     │
  ├──────────────┬──────────────┬──────────────┬────────────────────┤
  │ Policy       │ Risk         │ AI Intent    │ Audit              │
- │ Engine       │ Scoring      │ Parser       │ Trail              │
+ │ Engine       │ Scoring     │ Parser        │ Trail              │
  ├──────────────┴──────────────┴──────────────┴────────────────────┤
  │              PostgreSQL (Drizzle ORM) · Structured Logs         │
  └───────────────────────────────┬─────────────────────────────────┘
@@ -137,99 +112,77 @@
  └─────────────────────────────────────────────────────────────────┘
 ```
 
-</sub>
-
 ---
 
-### ◈ Tech Stack
-
-<sub>
+## Tech Stack
 
 | Layer | Technologies |
 |---|---|
-| <sub>**Frontend**</sub> | <sub><img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" height="18"/> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radixui&logoColor=white" height="18"/></sub> |
-| <sub>**Web3**</sub> | <sub><img src="https://img.shields.io/badge/wagmi-1C1B1F?style=flat-square&logo=wagmi&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/viem-1C1B1F?style=flat-square&logo=ethereum&logoColor=white" height="18"/></sub> |
-| <sub>**Backend**</sub> | <sub><img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Pino-687634?style=flat-square&logo=pino&logoColor=white" height="18"/></sub> |
-| <sub>**Database**</sub> | <sub><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat-square&logo=drizzle&logoColor=black" height="18"/></sub> |
-| <sub>**Tooling**</sub> | <sub><img src="https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white" height="18"/> <img src="https://img.shields.io/badge/esbuild-FFCF00?style=flat-square&logo=esbuild&logoColor=black" height="18"/></sub> |
-
-</sub>
+| **Frontend** | <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" height="20"/> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radixui&logoColor=white" height="20"/> |
+| **Web3** | <img src="https://img.shields.io/badge/wagmi-1C1B1F?style=flat-square&logo=wagmi&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/viem-1C1B1F?style=flat-square&logo=ethereum&logoColor=white" height="20"/> |
+| **Backend** | <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Pino-687634?style=flat-square&logo=pino&logoColor=white" height="20"/> |
+| **Database** | <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat-square&logo=drizzle&logoColor=black" height="20"/> |
+| **Tooling** | <img src="https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white" height="20"/> <img src="https://img.shields.io/badge/esbuild-FFCF00?style=flat-square&logo=esbuild&logoColor=black" height="20"/> |
 
 ---
 
-### ◈ Integrations
-
-<sub>
+## Integrations
 
 | Integration | Purpose | Link |
 |---|---|---|
-| <sub><img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" height="18"/></sub> | <sub>Natural-language intent parsing & transaction planning for the AI assistant</sub> | <sub>[openai.com](https://openai.com)</sub> |
-| <sub><img src="https://img.shields.io/badge/Clerk-6C47FF?style=flat-square&logo=clerk&logoColor=white" height="18"/></sub> | <sub>Authentication — email/password & Google SSO with branded consent screens</sub> | <sub>[clerk.com](https://clerk.com)</sub> |
-| <sub><img src="https://img.shields.io/badge/CoinGecko-8DC63F?style=flat-square&logo=coingecko&logoColor=white" height="18"/></sub> | <sub>Live token prices & USD portfolio valuation across networks</sub> | <sub>[coingecko.com](https://coingecko.com)</sub> |
-| <sub><img src="https://img.shields.io/badge/MetaMask-FF7139?style=flat-square&logo=metamask&logoColor=white" height="18"/></sub> | <sub>Wallet connection & supervised transaction signing</sub> | <sub>[metamask.io](https://metamask.io)</sub> |
-| <sub><img src="https://img.shields.io/badge/WalletConnect-3B99FC?style=flat-square&logo=walletconnect&logoColor=white" height="18"/></sub> | <sub>Multi-wallet connectivity for any EVM-compatible wallet</sub> | <sub>[walletconnect.network](https://walletconnect.network)</sub> |
-| <sub><img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=ethereum&logoColor=white" height="18"/></sub> | <sub>JSON-RPC read-only chain state across all supported EVM networks</sub> | <sub>[ethereum.org](https://ethereum.org)</sub> |
-| <sub><img src="https://img.shields.io/badge/Uniswap-FF007A?style=flat-square&logo=uniswap&logoColor=white" height="18"/></sub> | <sub>Onchain swap routing & quote simulation</sub> | <sub>[uniswap.org](https://uniswap.org)</sub> |
-
-</sub>
+| <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" height="20"/> | Natural-language intent parsing & transaction planning for the AI assistant | [openai.com](https://openai.com) |
+| <img src="https://img.shields.io/badge/Clerk-6C47FF?style=flat-square&logo=clerk&logoColor=white" height="20"/> | Authentication — email/password & Google SSO with branded consent screens | [clerk.com](https://clerk.com) |
+| <img src="https://img.shields.io/badge/CoinGecko-8DC63F?style=flat-square&logo=coingecko&logoColor=white" height="20"/> | Live token prices & USD portfolio valuation across networks | [coingecko.com](https://coingecko.com) |
+| <img src="https://img.shields.io/badge/MetaMask-FF7139?style=flat-square&logo=metamask&logoColor=white" height="20"/> | Wallet connection & supervised transaction signing | [metamask.io](https://metamask.io) |
+| <img src="https://img.shields.io/badge/WalletConnect-3B99FC?style=flat-square&logo=walletconnect&logoColor=white" height="20"/> | Multi-wallet connectivity for any EVM-compatible wallet | [walletconnect.network](https://walletconnect.network) |
+| <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=ethereum&logoColor=white" height="20"/> | JSON-RPC read-only chain state across all supported EVM networks | [ethereum.org](https://ethereum.org) |
+| <img src="https://img.shields.io/badge/Uniswap-FF007A?style=flat-square&logo=uniswap&logoColor=white" height="20"/> | Onchain swap routing & quote simulation | [uniswap.org](https://uniswap.org) |
 
 ---
 
-### ◈ Supported Networks
-
-<sub>
+## Supported Networks
 
 | Network | Chain ID | Status |
 |---|---|---|
-| <sub>⬡ **Robinhood Chain**</sub> | <sub>`4663`</sub> | <sub>🟢 Primary</sub> |
-| <sub>Ethereum Mainnet</sub> | <sub>`1`</sub> | <sub>🟢 Live</sub> |
-| <sub>+ 10 additional EVM networks</sub> | <sub>—</sub> | <sub>🟢 Live</sub> |
-
-</sub>
+| ⬡ **Robinhood Chain** | `4663` | 🟢 Primary |
+| Ethereum Mainnet | `1` | 🟢 Live |
+| + 10 additional EVM networks | — | 🟢 Live |
 
 ---
 
-### ◈ Policy Engine
+## Policy Engine
 
-<sub>Agents operate within your rules — enforced at execution time, not as suggestions.</sub>
-
-<sub>
+Agents operate within your rules — enforced at execution time, not as suggestions.
 
 | Policy Control | Example |
 |---|---|
-| <sub>🛡 Max spend per transaction</sub> | <sub>`$5,000 USDC`</sub> |
-| <sub>🕐 Daily limit</sub> | <sub>`$25,000`</sub> |
-| <sub>🔒 Allowed tokens</sub> | <sub>`USDC, WETH, WBTC`</sub> |
-| <sub>⛔ Protocol blacklist</sub> | <sub>Blocked protocols rejected pre-flight</sub> |
-| <sub>👁 Manual approval threshold</sub> | <sub>`Tx > $10K` requires explicit confirmation</sub> |
-| <sub>🚨 Emergency stop</sub> | <sub>Kill-switch for any agent, any time</sub> |
-
-</sub>
+| 🛡 Max spend per transaction | `$5,000 USDC` |
+| 🕐 Daily limit | `$25,000` |
+| 🔒 Allowed tokens | `USDC, WETH, WBTC` |
+| ⛔ Protocol blacklist | Blocked protocols rejected pre-flight |
+| 👁 Manual approval threshold | `Tx > $10K` requires explicit confirmation |
+| 🚨 Emergency stop | Kill-switch for any agent, any time |
 
 ---
 
-### ◈ AI Assistant
+## AI Assistant
 
-<sub>The console ships with a supervised AI assistant that parses natural-language intents into structured, policy-checked transaction plans.</sub>
-
-<sub>
+The console ships with a supervised AI assistant that parses natural-language intents into structured, policy-checked transaction plans.
 
 | Intent Class | Status |
 |---|---|
-| <sub>Token transfer, swap, recurring execution</sub> | <sub>🟢 Live</sub> |
-| <sub>Portfolio query, risk analysis, approval review</sub> | <sub>🟢 Live</sub> |
-| <sub>Lending, borrowing, staking</sub> | <sub>🟣 Recognized — execution coming soon</sub> |
-| <sub>Liquidity provision, rewards claim, bridging</sub> | <sub>🟣 Recognized — execution coming soon</sub> |
+| Token transfer, swap, recurring execution | 🟢 Live |
+| Portfolio query, risk analysis, approval review | 🟢 Live |
+| Lending, borrowing, staking | 🟣 Recognized — execution coming soon |
+| Liquidity provision, rewards claim, bridging | 🟣 Recognized — execution coming soon |
 
-</sub>
-
-<sub>Every generated plan displays: 🔒 <i>Supervised execution — your wallet signature is required.</i></sub>
+Every generated plan displays: 🔒 *Supervised execution — your wallet signature is required.*
 
 ---
 
-### ◈ Developer API
+## Developer API
 
-<sub>Every feature is available via a REST API secured by API keys.</sub>
+Every feature is available via a REST API secured by API keys.
 
 ```bash
 curl https://api.hermod.io/v1/wallets/analyze \
@@ -237,20 +190,14 @@ curl https://api.hermod.io/v1/wallets/analyze \
   -d '{"address":"0x1234...5678","chain":1}'
 ```
 
-<sub>
-
 - ⚡ Sub-200ms response time on all endpoints
 - 🌐 REST API with OpenAPI spec + codegen
 - 🔑 Per-key scopes, rate limits, and audit trail
 - 📡 Webhook events for agent actions and alerts
 
-</sub>
-
 ---
 
-### ◈ Project Structure
-
-<sub>
+## Project Structure
 
 ```
 .
@@ -267,13 +214,9 @@ curl https://api.hermod.io/v1/wallets/analyze \
 └── packages/              # Shared workspace libraries (zod schemas, db)
 ```
 
-</sub>
-
 ---
 
-### ◈ Getting Started
-
-<sub>
+## Getting Started
 
 ```bash
 # install dependencies
@@ -286,48 +229,36 @@ pnpm --filter @workspace/hermod run dev
 pnpm --filter @workspace/api-server run dev
 ```
 
-</sub>
-
-<sub>Then open the console, connect any EVM-compatible wallet, and configure your first agent policy.</sub>
+Then open the console, connect any EVM-compatible wallet, and configure your first agent policy.
 
 ---
 
-### ◈ Security Model
-
-<sub>
+## Security Model
 
 | Principle | Implementation |
 |---|---|
-| <sub>**Non-custodial**</sub> | <sub>Private keys never leave your wallet. All chain reads are RPC read-only.</sub> |
-| <sub>**Supervised execution**</sub> | <sub>No transaction executes without an explicit wallet signature.</sub> |
-| <sub>**Deterministic policy**</sub> | <sub>Limits enforced server-side at execution time — not advisory.</sub> |
-| <sub>**Immutable audit**</sub> | <sub>Every agent action and approval decision is logged and exportable.</sub> |
-| <sub>**Rate limiting**</sub> | <sub>Global API rate limits + per-key scoping.</sub> |
-| <sub>**Strict CORS**</sub> | <sub>Origin allowlist — unknown origins denied.</sub> |
-
-</sub>
+| **Non-custodial** | Private keys never leave your wallet. All chain reads are RPC read-only. |
+| **Supervised execution** | No transaction executes without an explicit wallet signature. |
+| **Deterministic policy** | Limits enforced server-side at execution time — not advisory. |
+| **Immutable audit** | Every agent action and approval decision is logged and exportable. |
+| **Rate limiting** | Global API rate limits + per-key scoping. |
+| **Strict CORS** | Origin allowlist — unknown origins denied. |
 
 ---
 
-### ◈ Roadmap
-
-<sub>
+## Roadmap
 
 | Quarter | Milestone | Status |
 |---|---|---|
-| <sub>Q3 2025</sub> | <sub>Core console: swap, transfer, recurring execution, approvals, risk engine, agents fleet, mobile console, developer API</sub> | <sub>🟢 LIVE</sub> |
-| <sub>Q4 2025</sub> | <sub>DeFi execution: lending, staking, liquidity provision, cross-chain bridging</sub> | <sub>🟣 PLANNED</sub> |
-| <sub>2026</sub> | <sub>Autonomous strategy vaults, institutional compliance suite</sub> | <sub>⚪ RESEARCH</sub> |
-
-</sub>
+| Q3 2025 | Core console: swap, transfer, recurring execution, approvals, risk engine, agents fleet, mobile console, developer API | 🟢 LIVE |
+| Q4 2025 | DeFi execution: lending, staking, liquidity provision, cross-chain bridging | 🟣 PLANNED |
+| 2026 | Autonomous strategy vaults, institutional compliance suite | ⚪ RESEARCH |
 
 ---
 
-### ◈ Community
+## Community
 
 <div align="center">
-
-<br/>
 
 <a href="https://hermod.ink"><img src="https://img.shields.io/badge/⬡_Console-hermod.ink-22c55e?style=flat-square&labelColor=0a0a0a" alt="Console" /></a>
 &nbsp;
@@ -339,12 +270,10 @@ pnpm --filter @workspace/api-server run dev
 
 <br/><br/>
 
-<sub>⬡</sub>
+⬡
 
-<sub><b>HERMOD</b> — Verifiable Financial Agents for Onchain Finance</sub>
+**HERMOD** — Verifiable Financial Agents for Onchain Finance
 
-<sub><i>Built for those who demand proof, not promises.</i></sub>
-
-<br/>
+*Built for those who demand proof, not promises.*
 
 </div>
