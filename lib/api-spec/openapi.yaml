@@ -1,0 +1,1557 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Hermod — AI-powered verifiable financial agent API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: wallets
+    description: Wallet management
+  - name: settings
+    description: Settings and configuration status
+  - name: dashboard
+    description: Dashboard summary data
+  - name: portfolio
+    description: Portfolio analysis
+  - name: risk
+    description: Risk detection
+  - name: approvals
+    description: Token approval scanning
+  - name: transactions
+    description: Transaction plans
+  - name: agents
+    description: Financial agents
+  - name: recurring
+    description: Recurring payment plans
+  - name: audit
+    description: Audit trail logs
+  - name: developer
+    description: Developer API keys
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  # ── Wallets ────────────────────────────────────────────────────────────────
+  /wallets:
+    get:
+      operationId: listWallets
+      tags: [wallets]
+      summary: List connected wallets
+      responses:
+        "200":
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Wallet"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: saveWallet
+      tags: [wallets]
+      summary: Save a connected wallet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WalletInput"
+      responses:
+        "201":
+          description: Wallet saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /wallets/{id}:
+    delete:
+      operationId: deleteWallet
+      tags: [wallets]
+      summary: Disconnect a wallet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Wallet disconnected
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Settings ───────────────────────────────────────────────────────────────
+  /settings/status:
+    get:
+      operationId: getSettingsStatus
+      tags: [settings]
+      summary: Get environment configuration status
+      responses:
+        "200":
+          description: Settings status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingsStatus"
+
+  # ── Dashboard ──────────────────────────────────────────────────────────────
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary statistics
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Portfolio ──────────────────────────────────────────────────────────────
+  /portfolio/analyze:
+    post:
+      operationId: analyzePortfolio
+      tags: [portfolio]
+      summary: Analyze wallet portfolio (fetch real balances)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortfolioAnalysisInput"
+      responses:
+        "200":
+          description: Portfolio snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioSnapshot"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: RPC not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /portfolio/snapshots:
+    get:
+      operationId: listPortfolioSnapshots
+      tags: [portfolio]
+      summary: List portfolio snapshots for connected wallets
+      responses:
+        "200":
+          description: List of snapshots
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortfolioSnapshot"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Risk ───────────────────────────────────────────────────────────────────
+  /risk/analyze-wallet:
+    post:
+      operationId: analyzeWalletRisk
+      tags: [risk]
+      summary: Analyze risk for a wallet address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WalletRiskInput"
+      responses:
+        "200":
+          description: Risk report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskReport"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /risk/analyze-token:
+    post:
+      operationId: analyzeTokenRisk
+      tags: [risk]
+      summary: Analyze risk for a token contract address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRiskInput"
+      responses:
+        "200":
+          description: Risk report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskReport"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /risk/reports:
+    get:
+      operationId: listRiskReports
+      tags: [risk]
+      summary: List stored risk reports
+      responses:
+        "200":
+          description: List of risk reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RiskReport"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Approvals ──────────────────────────────────────────────────────────────
+  /approvals:
+    get:
+      operationId: listApprovals
+      tags: [approvals]
+      summary: Fetch token approvals for connected wallet
+      parameters:
+        - name: walletAddress
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of token approvals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TokenApproval"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /approvals/revoke:
+    post:
+      operationId: prepareRevokeApproval
+      tags: [approvals]
+      summary: Prepare a revoke approval transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RevokeApprovalInput"
+      responses:
+        "200":
+          description: Transaction data to sign
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreparedTransaction"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Transactions ───────────────────────────────────────────────────────────
+  /transactions:
+    get:
+      operationId: listTransactions
+      tags: [transactions]
+      summary: List transaction plans
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: agentId
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of transaction plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TransactionPlan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: createTransaction
+      tags: [transactions]
+      summary: Create a transaction plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionInput"
+      responses:
+        "201":
+          description: Transaction plan created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionPlan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /transactions/{id}:
+    get:
+      operationId: getTransaction
+      tags: [transactions]
+      summary: Get a transaction plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Transaction plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionPlan"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updateTransaction
+      tags: [transactions]
+      summary: Update transaction status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionUpdate"
+      responses:
+        "200":
+          description: Updated transaction plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionPlan"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── AI Intent ──────────────────────────────────────────────────────────────
+  /ai/parse-intent:
+    post:
+      operationId: parseIntent
+      tags: [transactions]
+      summary: Parse natural language into a structured transaction plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IntentInput"
+      responses:
+        "200":
+          description: Parsed transaction plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParsedIntent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: AI API not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Swap ───────────────────────────────────────────────────────────────────
+  /swap/quote:
+    get:
+      operationId: getSwapQuote
+      tags: [transactions]
+      summary: Get a swap quote from aggregator
+      parameters:
+        - name: sellToken
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: buyToken
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: sellAmount
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Swap quote
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapQuote"
+        "503":
+          description: Swap provider not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Agents ─────────────────────────────────────────────────────────────────
+  /agents:
+    get:
+      operationId: listAgents
+      tags: [agents]
+      summary: List financial agents
+      responses:
+        "200":
+          description: List of agents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Agent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: createAgent
+      tags: [agents]
+      summary: Create a financial agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgentInput"
+      responses:
+        "201":
+          description: Agent created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /agents/{id}:
+    get:
+      operationId: getAgent
+      tags: [agents]
+      summary: Get a financial agent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Agent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updateAgent
+      tags: [agents]
+      summary: Update a financial agent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgentUpdate"
+      responses:
+        "200":
+          description: Updated agent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteAgent
+      tags: [agents]
+      summary: Delete a financial agent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Agent deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Recurring Plans ────────────────────────────────────────────────────────
+  /recurring:
+    get:
+      operationId: listRecurringPlans
+      tags: [recurring]
+      summary: List recurring payment plans
+      responses:
+        "200":
+          description: List of recurring plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecurringPlan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: createRecurringPlan
+      tags: [recurring]
+      summary: Create a recurring payment plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecurringPlanInput"
+      responses:
+        "201":
+          description: Recurring plan created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringPlan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /recurring/{id}:
+    patch:
+      operationId: updateRecurringPlan
+      tags: [recurring]
+      summary: Update a recurring plan (pause, resume, delete)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecurringPlanUpdate"
+      responses:
+        "200":
+          description: Updated recurring plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecurringPlan"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteRecurringPlan
+      tags: [recurring]
+      summary: Delete a recurring plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Audit Logs ─────────────────────────────────────────────────────────────
+  /audit:
+    get:
+      operationId: listAuditLogs
+      tags: [audit]
+      summary: List audit logs
+      parameters:
+        - name: eventType
+          in: query
+          schema:
+            type: string
+        - name: walletAddress
+          in: query
+          schema:
+            type: string
+        - name: agentId
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: List of audit logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditLogPage"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: createAuditLog
+      tags: [audit]
+      summary: Create an audit log entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuditLogInput"
+      responses:
+        "201":
+          description: Audit log created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditLog"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Developer API Keys ─────────────────────────────────────────────────────
+  /developer/keys:
+    get:
+      operationId: listApiKeys
+      tags: [developer]
+      summary: List developer API keys
+      responses:
+        "200":
+          description: List of API keys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiKey"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      operationId: createApiKey
+      tags: [developer]
+      summary: Create a developer API key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiKeyInput"
+      responses:
+        "201":
+          description: API key created (plaintext shown once)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiKeyCreated"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /developer/keys/{id}:
+    delete:
+      operationId: revokeApiKey
+      tags: [developer]
+      summary: Revoke a developer API key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Key revoked
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    # ── Shared ────────────────────────────────────────────────────────────────
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    # ── Wallets ───────────────────────────────────────────────────────────────
+    Wallet:
+      type: object
+      required: [id, address, chainId, label, isActive, createdAt]
+      properties:
+        id:
+          type: string
+        address:
+          type: string
+        chainId:
+          type: integer
+        chainName:
+          type: ["string", "null"]
+        label:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+
+    WalletInput:
+      type: object
+      required: [address, chainId]
+      properties:
+        address:
+          type: string
+        chainId:
+          type: integer
+        chainName:
+          type: string
+        label:
+          type: string
+
+    # ── Settings ──────────────────────────────────────────────────────────────
+    SettingsStatusItem:
+      type: object
+      required: [key, configured, required]
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        configured:
+          type: boolean
+        required:
+          type: boolean
+
+    SettingsStatus:
+      type: object
+      required: [items, allRequiredConfigured]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/SettingsStatusItem"
+        allRequiredConfigured:
+          type: boolean
+
+    # ── Dashboard ─────────────────────────────────────────────────────────────
+    DashboardSummary:
+      type: object
+      required: [walletCount, activeAgentCount, pendingTransactionCount, recentAuditLogs, riskAlertCount]
+      properties:
+        walletCount:
+          type: integer
+        activeAgentCount:
+          type: integer
+        pendingTransactionCount:
+          type: integer
+        riskAlertCount:
+          type: integer
+        recentAuditLogs:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuditLog"
+
+    # ── Portfolio ─────────────────────────────────────────────────────────────
+    PortfolioAsset:
+      type: object
+      required: [tokenSymbol, balance, decimals]
+      properties:
+        tokenAddress:
+          type: ["string", "null"]
+        tokenSymbol:
+          type: string
+        tokenName:
+          type: ["string", "null"]
+        balance:
+          type: string
+        balanceFormatted:
+          type: ["string", "null"]
+        decimals:
+          type: integer
+        usdValue:
+          type: ["string", "null"]
+        isNative:
+          type: boolean
+
+    PortfolioSnapshot:
+      type: object
+      required: [id, walletAddress, chainId, analyzedAt, assets]
+      properties:
+        id:
+          type: string
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        analyzedAt:
+          type: string
+        totalUsdValue:
+          type: ["string", "null"]
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/PortfolioAsset"
+
+    PortfolioAnalysisInput:
+      type: object
+      required: [walletAddress, chainId]
+      properties:
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+
+    # ── Risk ──────────────────────────────────────────────────────────────────
+    RiskFinding:
+      type: object
+      required: [code, severity, description]
+      properties:
+        code:
+          type: string
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        description:
+          type: string
+        recommendedAction:
+          type: ["string", "null"]
+
+    RiskReport:
+      type: object
+      required: [id, targetAddress, targetType, riskLevel, findings, createdAt]
+      properties:
+        id:
+          type: string
+        targetAddress:
+          type: string
+        targetType:
+          type: string
+          enum: [wallet, token]
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+        findings:
+          type: array
+          items:
+            $ref: "#/components/schemas/RiskFinding"
+        recommendedActions:
+          type: array
+          items:
+            type: string
+        verificationSource:
+          type: ["string", "null"]
+        explorerUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    WalletRiskInput:
+      type: object
+      required: [walletAddress, chainId]
+      properties:
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+
+    TokenRiskInput:
+      type: object
+      required: [tokenAddress, chainId]
+      properties:
+        tokenAddress:
+          type: string
+        chainId:
+          type: integer
+
+    # ── Approvals ─────────────────────────────────────────────────────────────
+    TokenApproval:
+      type: object
+      required: [tokenAddress, tokenSymbol, spenderAddress, allowance, isUnlimited, riskLevel]
+      properties:
+        tokenAddress:
+          type: string
+        tokenSymbol:
+          type: string
+        tokenName:
+          type: ["string", "null"]
+        spenderAddress:
+          type: string
+        spenderLabel:
+          type: ["string", "null"]
+        allowance:
+          type: string
+        isUnlimited:
+          type: boolean
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+
+    RevokeApprovalInput:
+      type: object
+      required: [tokenAddress, spenderAddress, walletAddress, chainId]
+      properties:
+        tokenAddress:
+          type: string
+        spenderAddress:
+          type: string
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+
+    PreparedTransaction:
+      type: object
+      required: [to, data, value, chainId]
+      properties:
+        to:
+          type: string
+        data:
+          type: string
+        value:
+          type: string
+        chainId:
+          type: integer
+        estimatedGas:
+          type: ["string", "null"]
+        description:
+          type: ["string", "null"]
+
+    # ── Transactions ──────────────────────────────────────────────────────────
+    TransactionPlan:
+      type: object
+      required: [id, userId, walletAddress, chainId, actionType, status, riskLevel, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        agentId:
+          type: ["string", "null"]
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        actionType:
+          type: string
+        targetContract:
+          type: ["string", "null"]
+        recipientAddress:
+          type: ["string", "null"]
+        tokenAddress:
+          type: ["string", "null"]
+        tokenSymbol:
+          type: ["string", "null"]
+        amount:
+          type: ["string", "null"]
+        calldata:
+          type: ["string", "null"]
+        estimatedGas:
+          type: ["string", "null"]
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+        riskWarnings:
+          type: array
+          items:
+            type: string
+        policyResult:
+          type: ["object", "null"]
+          additionalProperties: true
+        status:
+          type: string
+          enum: [draft, pending_approval, approved, rejected, signed, submitted, confirmed, failed]
+        transactionHash:
+          type: ["string", "null"]
+        explorerUrl:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    TransactionInput:
+      type: object
+      required: [walletAddress, chainId, actionType, riskLevel]
+      properties:
+        agentId:
+          type: string
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        actionType:
+          type: string
+        targetContract:
+          type: string
+        recipientAddress:
+          type: string
+        tokenAddress:
+          type: string
+        tokenSymbol:
+          type: string
+        amount:
+          type: string
+        calldata:
+          type: string
+        estimatedGas:
+          type: string
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+        riskWarnings:
+          type: array
+          items:
+            type: string
+        notes:
+          type: string
+
+    TransactionUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [approved, rejected, signed, submitted, confirmed, failed]
+        transactionHash:
+          type: string
+        explorerUrl:
+          type: string
+        notes:
+          type: string
+
+    IntentInput:
+      type: object
+      required: [prompt, walletAddress, chainId]
+      properties:
+        prompt:
+          type: string
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        agentId:
+          type: string
+
+    ParsedIntent:
+      type: object
+      required: [intent, actionType, requiresUserConfirmation]
+      properties:
+        intent:
+          type: string
+        actionType:
+          type: string
+        tokenIn:
+          type: ["string", "null"]
+        tokenOut:
+          type: ["string", "null"]
+        amount:
+          type: ["string", "null"]
+        recipient:
+          type: ["string", "null"]
+        protocol:
+          type: ["string", "null"]
+        contractAddresses:
+          type: array
+          items:
+            type: string
+        estimatedGas:
+          type: ["string", "null"]
+        risks:
+          type: array
+          items:
+            type: string
+        requiresUserConfirmation:
+          type: boolean
+        rawPlan:
+          type: object
+          additionalProperties: true
+
+    SwapQuote:
+      type: object
+      required: [sellToken, buyToken, sellAmount, buyAmount, price, estimatedGas, provider]
+      properties:
+        sellToken:
+          type: string
+        buyToken:
+          type: string
+        sellAmount:
+          type: string
+        buyAmount:
+          type: string
+        guaranteedPrice:
+          type: ["string", "null"]
+        price:
+          type: string
+        priceImpact:
+          type: ["string", "null"]
+        estimatedGas:
+          type: string
+        slippage:
+          type: ["string", "null"]
+        to:
+          type: ["string", "null"]
+        data:
+          type: ["string", "null"]
+        value:
+          type: ["string", "null"]
+        provider:
+          type: string
+
+    # ── Agents ────────────────────────────────────────────────────────────────
+    AgentPolicy:
+      type: object
+      properties:
+        maxTransactionAmount:
+          type: ["string", "null"]
+        maxDailySpend:
+          type: ["string", "null"]
+        allowedTokens:
+          type: array
+          items:
+            type: string
+        allowedProtocols:
+          type: array
+          items:
+            type: string
+        blockedAddresses:
+          type: array
+          items:
+            type: string
+        maxSlippage:
+          type: ["string", "null"]
+        requiresManualApproval:
+          type: boolean
+        dailyTransactionLimit:
+          type: ["integer", "null"]
+
+    Agent:
+      type: object
+      required: [id, userId, name, agentType, isActive, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        agentType:
+          type: string
+          enum: [payment, treasury, defi_execution, risk_monitoring, portfolio_analysis]
+        walletAddress:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+        policy:
+          $ref: "#/components/schemas/AgentPolicy"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    AgentInput:
+      type: object
+      required: [name, agentType]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        agentType:
+          type: string
+          enum: [payment, treasury, defi_execution, risk_monitoring, portfolio_analysis]
+        walletAddress:
+          type: string
+        policy:
+          $ref: "#/components/schemas/AgentPolicy"
+
+    AgentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        walletAddress:
+          type: string
+        isActive:
+          type: boolean
+        policy:
+          $ref: "#/components/schemas/AgentPolicy"
+
+    # ── Recurring Plans ───────────────────────────────────────────────────────
+    RecurringPlan:
+      type: object
+      required: [id, userId, walletAddress, chainId, tokenSymbol, amount, frequency, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        agentId:
+          type: ["string", "null"]
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        recipientAddress:
+          type: string
+        tokenAddress:
+          type: ["string", "null"]
+        tokenSymbol:
+          type: string
+        amount:
+          type: string
+        frequency:
+          type: string
+          enum: [daily, weekly, monthly]
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        maxExecutions:
+          type: ["integer", "null"]
+        executionCount:
+          type: integer
+        status:
+          type: string
+          enum: [active, paused, completed, failed]
+        nextExecutionAt:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    RecurringPlanInput:
+      type: object
+      required: [walletAddress, chainId, recipientAddress, tokenSymbol, amount, frequency, startDate]
+      properties:
+        agentId:
+          type: string
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        recipientAddress:
+          type: string
+        tokenAddress:
+          type: string
+        tokenSymbol:
+          type: string
+        amount:
+          type: string
+        frequency:
+          type: string
+          enum: [daily, weekly, monthly]
+        startDate:
+          type: string
+        endDate:
+          type: string
+        maxExecutions:
+          type: integer
+
+    RecurringPlanUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [active, paused]
+
+    # ── Audit Logs ────────────────────────────────────────────────────────────
+    AuditLog:
+      type: object
+      required: [id, userId, eventType, createdAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        agentId:
+          type: ["string", "null"]
+        walletAddress:
+          type: ["string", "null"]
+        eventType:
+          type: string
+        eventData:
+          type: ["object", "null"]
+          additionalProperties: true
+        transactionHash:
+          type: ["string", "null"]
+        status:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    AuditLogInput:
+      type: object
+      required: [eventType]
+      properties:
+        agentId:
+          type: string
+        walletAddress:
+          type: string
+        eventType:
+          type: string
+        eventData:
+          type: object
+          additionalProperties: true
+        transactionHash:
+          type: string
+        status:
+          type: string
+
+    AuditLogPage:
+      type: object
+      required: [items, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuditLog"
+        total:
+          type: integer
+
+    # ── Developer API Keys ────────────────────────────────────────────────────
+    ApiKey:
+      type: object
+      required: [id, label, prefix, isActive, createdAt]
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        prefix:
+          type: string
+        isActive:
+          type: boolean
+        lastUsedAt:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    ApiKeyInput:
+      type: object
+      required: [label]
+      properties:
+        label:
+          type: string
+
+    ApiKeyCreated:
+      type: object
+      required: [id, label, prefix, key, isActive, createdAt]
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        prefix:
+          type: string
+        key:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
