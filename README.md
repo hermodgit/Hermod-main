@@ -26,28 +26,6 @@ with policy enforcement, risk detection, and full audit trail.
 
 </div>
 
----
-
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Core Modules](#core-modules)
-3. [How It Works](#how-it-works)
-4. [Architecture](#architecture)
-5. [Tech Stack](#tech-stack)
-6. [Integrations](#integrations)
-7. [Supported Networks](#supported-networks)
-8. [Policy Engine](#policy-engine)
-9. [AI Assistant](#ai-assistant)
-10. [Developer API](#developer-api)
-11. [Project Structure](#project-structure)
-12. [Getting Started](#getting-started)
-13. [Security Model](#security-model)
-14. [Roadmap](#roadmap)
-15. [Community](#community)
-
----
-
 ## Overview
 
 **Hermod** is an operating console where AI financial agents manage real onchain assets under strict human supervision. Every action an agent takes passes through a deterministic policy engine, is risk-scored in real time, and is recorded in an immutable audit log. Nothing executes without your wallet signature — Hermod is fully **non-custodial** and never touches private keys.
@@ -65,12 +43,12 @@ with policy enforcement, risk detection, and full audit trail.
 
 | Module | Description |
 |---|---|
-| 🛡 **Risk Detection** | Real-time wallet & token risk analysis with verifiable onchain data. Blacklist detection, honeypot scanning, rugpull indicators. |
-| 📈 **Portfolio Analysis** | Track balances, PnL, and composition across all chains and wallets. Live USD valuation. Historical snapshots with on-demand refresh. |
-| 🔑 **Approval Manager** | Discover, review, and revoke token approvals across all connected wallets. Infinite-approval detection and risk scoring. |
-| ⚙ **Transaction Engine** | Prepare, simulate, review, and execute transactions with full policy enforcement and approval flows. |
-| 🤖 **AI Agent Control** | Deploy and manage AI financial agents with spend limits, allowed-token lists, and manual override capability. |
-| 📋 **Audit & Compliance** | Immutable event log of every agent action, approval decision, and system event. Exportable for compliance reporting. |
+| **Risk Detection** | Real-time wallet & token risk analysis with verifiable onchain data. Blacklist detection, honeypot scanning, rugpull indicators. |
+| **Portfolio Analysis** | Track balances, PnL, and composition across all chains and wallets. Live USD valuation. Historical snapshots with on-demand refresh. |
+| **Approval Manager** | Discover, review, and revoke token approvals across all connected wallets. Infinite-approval detection and risk scoring. |
+| **Transaction Engine** | Prepare, simulate, review, and execute transactions with full policy enforcement and approval flows. |
+| **AI Agent Control** | Deploy and manage AI financial agents with spend limits, allowed-token lists, and manual override capability. |
+| **Audit & Compliance** | Immutable event log of every agent action, approval decision, and system event. Exportable for compliance reporting. |
 
 ---
 
@@ -156,12 +134,12 @@ Agents operate within your rules — enforced at execution time, not as suggesti
 
 | Policy Control | Example |
 |---|---|
-| 🛡 Max spend per transaction | `$5,000 USDC` |
-| 🕐 Daily limit | `$25,000` |
-| 🔒 Allowed tokens | `USDC, WETH, WBTC` |
-| ⛔ Protocol blacklist | Blocked protocols rejected pre-flight |
-| 👁 Manual approval threshold | `Tx > $10K` requires explicit confirmation |
-| 🚨 Emergency stop | Kill-switch for any agent, any time |
+| Max spend per transaction | `$5,000 USDC` |
+| Daily limit | `$25,000` |
+| Allowed tokens | `USDC, WETH, WBTC` |
+| Protocol blacklist | Blocked protocols rejected pre-flight |
+| Manual approval threshold | `Tx > $10K` requires explicit confirmation |
+| Emergency stop | Kill-switch for any agent, any time |
 
 ---
 
