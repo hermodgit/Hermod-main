@@ -15,6 +15,7 @@ import {
   ChevronRight,
   ArrowDownUp,
   Bot,
+  Layers,
 } from 'lucide-react';
 import { useUser } from '@clerk/react';
 import { useSidebar } from '@/lib/sidebar-context';
@@ -33,6 +34,7 @@ const navGroups = [
     items: [
       { href: '/transfer',     label: 'Transfer',     icon: Send },
       { href: '/swap',         label: 'Swap',         icon: ArrowDownUp },
+      { href: '/defi',         label: 'DeFi',         icon: Layers },
       { href: '/ai-agent',     label: 'AI Agent',     icon: Bot },
       { href: '/risk',         label: 'Risk',         icon: Shield },
       { href: '/approvals',    label: 'Approvals',    icon: Key },
