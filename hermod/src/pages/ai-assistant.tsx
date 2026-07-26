@@ -136,7 +136,7 @@ export default function AIAssistant() {
             : isSwap
             ? `Swap plan ready.${risks}${missingInfo}\n\nClick "Open Swap" to execute with real-time quotes.`
             : isDefiIntent
-            ? `Intent recognized: ${plan.intent}.${risks}${missingInfo}\n\nDirect ${DEFI_LABELS[plan.actionType]?.label ?? plan.actionType.replace(/_/g, ' ')} execution is coming soon. Your plan has been recorded — you can track it in Transactions.`
+            ? `Intent recognized: ${plan.intent}.${risks}${missingInfo}\n\nClick "Open DeFi" to execute this ${DEFI_LABELS[plan.actionType]?.label ?? plan.actionType.replace(/_/g, ' ')} action with supervised wallet signing.`
             : `I've analyzed your request: ${plan.intent}.${risks}${missingInfo}${
                 plan.actionType === 'analyze_wallet' || plan.actionType === 'analyze_risk'
                   ? '\n\nThis is an analysis request — no transaction required. Use the Risk or Portfolio pages for deep analysis.'
@@ -422,11 +422,11 @@ export default function AIAssistant() {
                   </div>
                 )}
 
-                {/* DeFi intent card — recognized but not yet executable */}
+                {/* DeFi intent card — executable via /defi page */}
                 {msg.plan && DEFI_INTENT_TYPES.includes(msg.plan.actionType) && (() => {
                   const defi = DEFI_LABELS[msg.plan.actionType];
                   return (
-                    <div style={{ background: 'hsl(0 0% 5%)', border: '1px solid hsl(0 0% 10%)', borderTop: '2px solid hsl(270 60% 55%)', borderRadius: 2, padding: 14, width: '100%' }}>
+                    <div style={{ background: 'hsl(0 0% 5%)', border: '1px solid hsl(0 0% 10%)', borderTop: '2px solid hsl(112 100% 54%)', borderRadius: 2, padding: 14, width: '100%' }}>
                       <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', color: 'hsl(0 0% 35%)', marginBottom: 8 }}>DEFI INTENT RECOGNIZED</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                         <span style={{ fontSize: 18 }}>{defi?.icon ?? '⚡'}</span>
@@ -434,8 +434,8 @@ export default function AIAssistant() {
                           <p style={{ fontSize: 12, fontWeight: 600, color: 'hsl(0 0% 80%)' }}>{defi?.label ?? msg.plan.actionType.replace(/_/g, ' ')}</p>
                           <p style={{ fontSize: 10, color: 'hsl(0 0% 40%)', marginTop: 1 }}>{defi?.note}</p>
                         </div>
-                        <span style={{ marginLeft: 'auto', fontSize: 8, fontWeight: 700, letterSpacing: '0.1em', padding: '2px 6px', borderRadius: 2, background: 'hsl(270 60% 55% / 0.12)', border: '1px solid hsl(270 60% 55% / 0.3)', color: 'hsl(270 60% 70%)' }}>
-                          COMING SOON
+                        <span style={{ marginLeft: 'auto', fontSize: 8, fontWeight: 700, letterSpacing: '0.1em', padding: '2px 6px', borderRadius: 2, background: 'hsl(112 100% 54% / 0.10)', border: '1px solid hsl(112 100% 54% / 0.3)', color: 'hsl(112 100% 54%)' }}>
+                          LIVE
                         </span>
                       </div>
                       {msg.plan.protocol && (
@@ -450,9 +450,13 @@ export default function AIAssistant() {
                           <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'hsl(0 0% 72%)' }}>{msg.plan.amount as string} {msg.plan.tokenIn as string}</span>
                         </div>
                       )}
-                      <p style={{ fontSize: 9, color: 'hsl(0 0% 30%)', marginTop: 8, lineHeight: 1.5 }}>
-                        Direct protocol execution is on the roadmap. This intent has been captured — check the Transactions page for the logged plan.
-                      </p>
+                      <Link href="/defi" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 10,
+                        fontSize: 11, fontWeight: 600, color: '#000', textDecoration: 'none',
+                        padding: '7px 14px', background: 'hsl(112 100% 54%)', borderRadius: 2,
+                      }}>
+                        Open DeFi <ArrowRight size={11} />
+                      </Link>
                     </div>
                   );
                 })()}
