@@ -3,7 +3,7 @@ import { Link, useLocation } from 'wouter';
 import {
   LayoutDashboard, Send, ArrowDownUp, Bot, Menu, X,
   Wallet, PieChart, Shield, Key, Cpu, Repeat, ScrollText,
-  Code2, Settings,
+  Code2, Settings, Layers,
 } from 'lucide-react';
 import { useUser } from '@clerk/react';
 
@@ -30,6 +30,7 @@ const DRAWER_GROUPS = [
     items: [
       { href: '/transfer',     label: 'Transfer',     icon: Send },
       { href: '/swap',         label: 'Swap',         icon: ArrowDownUp },
+      { href: '/defi',         label: 'DeFi',         icon: Layers },
       { href: '/ai-agent',     label: 'AI Agent',     icon: Bot },
       { href: '/risk',         label: 'Risk',         icon: Shield },
       { href: '/approvals',    label: 'Approvals',    icon: Key },
