@@ -28,6 +28,7 @@ import Developer from '@/pages/developer';
 import Settings from '@/pages/settings';
 import Transfer from '@/pages/transfer';
 import SwapPage from '@/pages/swap';
+import DeFi from '@/pages/defi';
 import AIAssistant from '@/pages/ai-assistant';
 import Whitepaper from '@/pages/whitepaper';
 import NotFound from '@/pages/not-found';
@@ -169,6 +170,7 @@ function Router() {
       <Route path="/settings" component={Settings} />
       <Route path="/transfer" component={Transfer} />
       <Route path="/swap" component={SwapPage} />
+      <Route path="/defi" component={DeFi} />
       <Route path="/ai-agent" component={AIAssistant} />
       <Route path="/whitepaper" component={Whitepaper} />
       <Route component={NotFound} />
