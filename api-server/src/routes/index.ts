@@ -14,6 +14,13 @@ import developerRouter from "./developer";
 import aiRouter from "./ai";
 import swapRouter from "./swap";
 import policyRouter from "./policy";
+import defiRouter from "./defi";
+import triggersRouter from "./triggers";
+import agentCommsRouter from "./agent-comms";
+import webhooksRouter from "./webhooks";
+import policyTemplatesRouter from "./policy-templates";
+import analyticsRouter from "./analytics";
+import bugBountyRouter from "./bug-bounty";
 
 const router: IRouter = Router();
 
@@ -32,5 +39,12 @@ router.use(developerRouter);
 router.use(aiRouter);
 router.use(swapRouter);
 router.use(policyRouter);
+router.use(defiRouter);
+router.use(triggersRouter);
+router.use(agentCommsRouter);
+router.use(webhooksRouter);
+router.use(policyTemplatesRouter);
+router.use(analyticsRouter);
+router.use(bugBountyRouter);
 
 export default router;
