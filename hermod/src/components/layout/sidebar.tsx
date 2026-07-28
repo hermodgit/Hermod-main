@@ -16,9 +16,16 @@ import {
   ArrowDownUp,
   Bot,
   Layers,
+  Zap,
+  LayoutTemplate,
+  BarChart2,
+  Radio,
+  Bell,
 } from 'lucide-react';
 import { useUser } from '@clerk/react';
 import { useSidebar } from '@/lib/sidebar-context';
+import { useAgentMessagesPendingCount } from '@workspace/api-client-react';
+import { useNotificationsListener } from '@/hooks/use-notifications';
 
 const navGroups = [
   {
@@ -39,16 +46,25 @@ const navGroups = [
       { href: '/risk',         label: 'Risk',         icon: Shield },
       { href: '/approvals',    label: 'Approvals',    icon: Key },
       { href: '/transactions', label: 'Transactions', icon: ScrollText },
-      { href: '/agents',       label: 'Agents',       icon: Cpu },
-      { href: '/recurring',    label: 'Recurring',    icon: Repeat },
+      { href: '/agents',           label: 'Agents',    icon: Cpu },
+      { href: '/signals',          label: 'Signals',   icon: Radio },
+      { href: '/policy-templates', label: 'Templates', icon: LayoutTemplate },
+      { href: '/recurring',        label: 'Recurring', icon: Repeat },
+      { href: '/triggers',         label: 'Triggers',  icon: Zap },
+    ],
+  },
+  {
+    label: 'INTELLIGENCE',
+    items: [
+      { href: '/analytics',    label: 'Analytics',    icon: BarChart2 },
+      { href: '/audit',        label: 'Audit Log',    icon: Key },
     ],
   },
   {
     label: 'SYSTEM',
     items: [
-      { href: '/audit',        label: 'Audit Log',    icon: Key },
-      { href: '/developer',    label: 'Developer',    icon: Code2 },
-      { href: '/settings',     label: 'Settings',     icon: Settings },
+      { href: '/developer', label: 'Developer', icon: Code2 },
+      { href: '/settings',  label: 'Settings',  icon: Settings },
     ],
   },
 ];
@@ -57,6 +73,8 @@ export function Sidebar() {
   const [location] = useLocation();
   const { collapsed, toggle } = useSidebar();
   const { user } = useUser();
+  const { data: pendingCount } = useAgentMessagesPendingCount();
+  const { unreadCount, markAllRead } = useNotificationsListener();
 
   const initials = user?.firstName && user?.lastName
     ? `${user.firstName[0]}${user.lastName[0]}`
@@ -203,9 +221,23 @@ export function Sidebar() {
                         color: isActive ? 'hsl(0 0% 88%)' : 'hsl(0 0% 50%)',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
+                        flex: 1,
                       }}
                     >
                       {item.label}
+                    </span>
+                  )}
+                  {/* Pending inbox badge for Agents */}
+                  {item.href === '/agents' && (pendingCount?.count ?? 0) > 0 && (
+                    <span style={{
+                      fontSize: 8, fontWeight: 700, lineHeight: 1,
+                      padding: collapsed ? '2px 4px' : '2px 5px',
+                      borderRadius: 999,
+                      background: 'hsl(43 100% 54%)',
+                      color: '#000',
+                      flexShrink: 0,
+                    }}>
+                      {pendingCount!.count}
                     </span>
                   )}
 
